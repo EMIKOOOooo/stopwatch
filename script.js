@@ -1,49 +1,42 @@
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
+
 const display = document.getElementById('display');
 const startStopBtn = document.getElementById('startStopBtn');
 const resetBtn = document.getElementById('resetBtn');
 
-let startTime;
-let updatedTime;
-let difference;
-let tInterval;
-let running = false;
-let lapCounter = 0;
+function formatTime(time) {
+    const date = new Date(time);
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0');
+    return `${minutes}:${seconds}.${milliseconds}`;
+}
 
 function startStop() {
-    if (!running) {
-        startTime = new Date().getTime();
-        tInterval = setInterval(getShowTime, 1);
-        startStopBtn.innerHTML = "ストップ";
-        running = true;
+    if (timerInterval) {
+        // Stop the timer
+        clearInterval(timerInterval);
+        timerInterval = null;
+        startStopBtn.textContent = 'スタート';
     } else {
-        clearInterval(tInterval);
-        startStopBtn.innerHTML = "スタート";
-        running = false;
+        // Start the timer
+        startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(() => {
+            elapsedTime = Date.now() - startTime;
+            display.textContent = formatTime(elapsedTime);
+        }, 10);
+        startStopBtn.textContent = 'ストップ';
     }
 }
 
 function reset() {
-    clearInterval(tInterval);
-    running = false;
-    startStopBtn.innerHTML = "スタート";
-    display.innerHTML = "00:00:00.000";
-}
-
-function getShowTime() {
-    updatedTime = new Date().getTime();
-    difference = updatedTime - startTime;
-
-    let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((difference % (1000 * 60)) / 1000);
-    let milliseconds = Math.floor((difference % 1000));
-
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-    milliseconds = (milliseconds < 100) ? (milliseconds < 10 ? "00" + milliseconds : "0" + milliseconds) : milliseconds;
-
-    display.innerHTML = hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    clearInterval(timerInterval);
+    timerInterval = null;
+    elapsedTime = 0;
+    display.textContent = formatTime(elapsedTime);
+    startStopBtn.textContent = 'スタート';
 }
 
 startStopBtn.addEventListener('click', startStop);
