@@ -1,10 +1,13 @@
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
+let lapCounter = 1;
 
 const display = document.getElementById('display');
 const startStopBtn = document.getElementById('startStopBtn');
+const lapBtn = document.getElementById('lapBtn');
 const resetBtn = document.getElementById('resetBtn');
+const lapsList = document.getElementById('laps');
 
 function formatTime(time) {
     const date = new Date(time);
@@ -19,7 +22,7 @@ function startStop() {
         // Stop the timer
         clearInterval(timerInterval);
         timerInterval = null;
-        startStopBtn.textContent = 'スタート';
+        startStopBtn.textContent = 'START';
     } else {
         // Start the timer
         startTime = Date.now() - elapsedTime;
@@ -27,7 +30,16 @@ function startStop() {
             elapsedTime = Date.now() - startTime;
             display.textContent = formatTime(elapsedTime);
         }, 10);
-        startStopBtn.textContent = 'ストップ';
+        startStopBtn.textContent = 'STOP';
+    }
+}
+
+function lap() {
+    if (timerInterval) {
+        const lapTime = formatTime(elapsedTime);
+        const listItem = document.createElement('li');
+        listItem.textContent = `Lap ${lapCounter++}: ${lapTime}`;
+        lapsList.appendChild(listItem);
     }
 }
 
@@ -35,9 +47,12 @@ function reset() {
     clearInterval(timerInterval);
     timerInterval = null;
     elapsedTime = 0;
+    lapCounter = 1;
     display.textContent = formatTime(elapsedTime);
-    startStopBtn.textContent = 'スタート';
+    startStopBtn.textContent = 'START';
+    lapsList.innerHTML = '';
 }
 
 startStopBtn.addEventListener('click', startStop);
+lapBtn.addEventListener('click', lap);
 resetBtn.addEventListener('click', reset);

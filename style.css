@@ -1,78 +1,70 @@
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+    font-family: 'Metal Mania', cursive;
+    background-color: #121212;
+    color: #e0e0e0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden;
-    position: relative;
 }
 
 .stopwatch-container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    background-color: #1e1e1e;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.5), 0 0 50px rgba(0, 255, 0, 0.3);
     text-align: center;
-    z-index: 1;
+    border: 2px solid #ff0000;
 }
 
 #display {
-    font-size: 3em;
-    color: #333;
-    margin-bottom: 20px;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 4em;
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+    margin-bottom: 30px;
 }
 
 .buttons button {
-    font-size: 1.2em;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
+    font-family: 'Metal Mania', cursive;
+    font-size: 1.5em;
+    padding: 15px 30px;
+    border: 2px solid #00ff00;
+    border-radius: 15px;
     cursor: pointer;
-    color: white;
-    margin: 0 10px;
-    transition: background-color 0.3s, transform 0.2s;
+    color: #00ff00;
+    background-color: transparent;
+    margin: 0 15px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #00ff00;
 }
 
-#startStopBtn {
-    background-color: #84d98c; /* Leaf Green */
-}
-
-#startStopBtn:hover {
-    background-color: #73c87b;
-}
-
-#resetBtn {
-    background-color: #ff9a9e; /* Flower Pink */
-}
-
-#resetBtn:hover {
-    background-color: #f78b8f;
+.buttons button:hover {
+    background-color: #00ff00;
+    color: #121212;
+    box-shadow: 0 0 20px #00ff00;
 }
 
 .buttons button:active {
     transform: scale(0.95);
 }
 
-/* Flower Decorations */
-body::before, body::after {
-    content: '🌸';
-    font-size: 5em;
-    position: absolute;
-    opacity: 0.6;
+#laps {
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+    max-height: 150px;
+    overflow-y: auto;
+    color: #00ff00;
 }
 
-body::before {
-    top: 20px;
-    left: 20px;
-    transform: rotate(-15deg);
+#laps li {
+    font-size: 1.2em;
+    padding: 5px 0;
+    border-bottom: 1px dashed #444;
 }
 
-body::after {
-    bottom: 20px;
-    right: 20px;
-    transform: rotate(15deg);
+#laps li:last-child {
+    border-bottom: none;
 }
